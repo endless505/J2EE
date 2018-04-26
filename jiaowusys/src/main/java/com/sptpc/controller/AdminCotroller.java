@@ -15,10 +15,12 @@ import org.springframework.web.servlet.ModelAndViewDefiningException;
 import com.sptpc.domain.College;
 import com.sptpc.domain.Course;
 import com.sptpc.domain.Student;
+import com.sptpc.domain.Teacher;
 import com.sptpc.persistence.CollegeMapper;
 import com.sptpc.service.CollegeService;
 import com.sptpc.service.CourseService;
 import com.sptpc.service.StudentService;
+import com.sptpc.service.TeacherService;
 
 @Controller
 public class AdminCotroller {
@@ -28,6 +30,8 @@ public class AdminCotroller {
 	private CollegeService collegeService;
 	@Autowired
 	private CourseService courseService;
+	@Autowired
+	private TeacherService teacherService;
 	@RequestMapping("ctr_showStudent")
 	public ModelAndView showStudent(HttpSession session){
 		List<Student> studentList = null;
@@ -69,7 +73,7 @@ public class AdminCotroller {
 		
 		return mv;
 	}
-	//学生信息修改
+	//提交学生信息修改
 	@RequestMapping(value="ctr_editStudent", method = RequestMethod.POST)
 	public ModelAndView editStudentSubmit(Student student){
 		ModelAndView mv = new ModelAndView("admin/editStudent");
@@ -99,4 +103,30 @@ public class AdminCotroller {
 		mv.addObject("courseList", courseList);
 		return mv;		
 	}
+	//课程信息修改
+		@RequestMapping(value="ctr_editCourse", method = RequestMethod.GET)
+		public ModelAndView editourse(@RequestParam("id") String userID){
+			ModelAndView mv = new ModelAndView("admin/editCourse");
+			Course course = courseService.findCourseById(userID);
+			List<Teacher> teacherList = teacherService.getAllTeacher();
+			mv.addObject("teacherList",teacherList);
+			mv.addObject("course",course);
+			List<College> collegeList = collegeService.getAllCollege();
+			mv.addObject("collegeList",collegeList);
+			return mv;
+		}
+	//添加课程信息
+		@RequestMapping(value="ctr_editCourse", method = RequestMethod.POST)
+		public ModelAndView editCourseSubmit(Course course){
+			ModelAndView mv = new ModelAndView("admin/editCourse");
+			int n  = courseService.updateCourse(course);
+			if(n == 0){
+				//不成功
+				mv = new ModelAndView("admin/editCourse");
+			}else{
+				mv =  new ModelAndView("redirect:ctr_showCourse");
+			}
+			
+			return mv;
+		}
 }
