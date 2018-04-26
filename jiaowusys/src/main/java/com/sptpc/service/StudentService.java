@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sptpc.domain.Course;
 import com.sptpc.domain.Student;
 import com.sptpc.persistence.StudentMapper;
 

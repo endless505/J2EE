@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.sptpc.domain.Course;
 import com.sptpc.domain.Student;
 
 @Repository
@@ -22,4 +23,5 @@ public interface StudentMapper {
 	public int deleteStudentCourseByID(int userID);
 	//根据学生id删除学生信息
 	public int deleteStudent(int userID);
+	
 }

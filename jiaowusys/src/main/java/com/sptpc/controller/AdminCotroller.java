@@ -13,9 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 import com.sptpc.domain.College;
+import com.sptpc.domain.Course;
 import com.sptpc.domain.Student;
 import com.sptpc.persistence.CollegeMapper;
 import com.sptpc.service.CollegeService;
+import com.sptpc.service.CourseService;
 import com.sptpc.service.StudentService;
 
 @Controller
@@ -24,7 +26,8 @@ public class AdminCotroller {
 	private StudentService studentService;
 	@Autowired
 	private CollegeService collegeService;
-
+	@Autowired
+	private CourseService courseService;
 	@RequestMapping("ctr_showStudent")
 	public ModelAndView showStudent(HttpSession session){
 		List<Student> studentList = null;
@@ -86,5 +89,14 @@ public class AdminCotroller {
 		int n = studentService.deleteStudentByID(userID);
 		mv = new ModelAndView("redirect:ctr_showStudent");
 		return mv;
+	}
+	//显示课程信息
+	@RequestMapping(value = "ctr_showCourse")
+	public ModelAndView showCourse(HttpSession session){
+		List<Course> courseList = null;
+		ModelAndView mv = new ModelAndView("admin/showCourse");
+		courseList = courseService.getAllCourse();
+		mv.addObject("courseList", courseList);
+		return mv;		
 	}
 }
