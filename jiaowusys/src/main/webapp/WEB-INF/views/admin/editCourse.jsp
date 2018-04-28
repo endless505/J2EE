@@ -44,7 +44,7 @@
 							  <div class="form-group">
 								  <label for="inputPassword3" class="col-sm-2 control-label" name="grade">授课老师编号</label>
 								  <div class="col-sm-10">
-									  <select class="form-control" name="teacherid" id="teacherID">
+									  <select class="form-control" name="teacherID" id="teacherID">
 										  <c:forEach items="${teacherList}" var="item">
 											  <option value="${item.userID}">${item.userName}</option>
 										  </c:forEach>
